@@ -146,18 +146,24 @@ import MUIDataTable from "mui-datatables";
 import { NavLink } from "react-router-dom";
 import "./style.css";
 import { Button } from "react-bootstrap";
+import { connect } from "react-redux";
+import { store } from "./../../store";
+import FileUploader from './fileUploading'
 
-export default class Patients extends React.Component {
+
+var Visits;
+  class Patients extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      visitstate:0,
       columns: [
         {
           label: "National Id",
           name: "patient_NationalID",
         },
         {
-          label: "Token I.D",
+          label: "Visit I.D",
           name: "id",
         },
         {
@@ -189,34 +195,86 @@ export default class Patients extends React.Component {
         },
 
         {
+
           label: "View Documents",
           name: "id",
+
           options: {
-            customBodyRender: (val) => (
+        
+            customBodyRender: (val) => (  
+         
+      
               <NavLink
                 className="viewButton"
-                to={`/LabTest/visitLabTest/${val}`}
+                to={`/LabTest/visitLabTest/${val}`} 
+                //  11,6
               >
+                             {/* { this.visitfun(val)} */}
+                            
+                           
                 View Documents
               </NavLink>
-              // <Button
-              //   className="viewButton"
-              //   onClick={() => alert("Uploading Image...")}
-              // >
-              //   View Documents
-              // </Button>
             ),
+          
           },
+
         },
+        {
+          label: "Add Documents",
+          name: "id",
+
+          options: {
+        
+            customBodyRender: (val) => (  
+         
+      
+              <NavLink
+                className="viewButton"
+                to={`/Fileuploading/${val}`} 
+               
+              >
+                             {/* { this.visitfun(val)} */}
+                             {/* <FileUploader visit_id={val}/> */}
+                            
+                           
+                Add Documents
+              </NavLink>
+            ),
+          
+          },
+
+        }
+        
+        
+
       ],
       rowSelection: "single",
       rowData: [],
     };
+    this.nameInput = React.createRef(); // define ref
+
+    this.visitfun=this.visitfun.bind(this)
   }
   options = {
     filterType: "checkbox",
     responsive: "vertical",
   };
+  visitfun(visitid){
+    console.log("visit page id in disptch",visitid)
+    store.dispatch({
+      type: "GET_nationalid",
+      payload: {
+        national_id: visitid ,
+      },
+    });
+  }
+//   componentDidUpdate() {
+//     if (this.nameInput) {
+//     // Use DOM element's native method here
+//     this.nameInput.click();
+//     }
+// }
+
   componentDidMount() {
     fetch(
       `https://cloudclinicapi.azurewebsites.net/api/patient/patientsVisits/${this.props.match.params.id}`
@@ -227,13 +285,21 @@ export default class Patients extends React.Component {
           alert(rowData);
         } else {
           this.setState({ rowData });
-          console.log("id of user",this.props.match.params.id)
+          // console.log("id of user of visist",this.state.visitstate)
+          // store.dispatch({
+          //   type: "GET_nationalid",
+          //   payload: {
+          //     national_id: this.state.visitstate ,
+          //   },
+          // });
         }
       });
   }
 
   onSelectionChanged = () => {
     var selectedRows = this.gridApi.getSelectedRows();
+    // console.log("selected of row",this.gridApi.getSelectedRows())
+  
     this.props.history.push(
       "/EditPatient?.Patient=" + selectedRows[0].nationalID
     );
@@ -242,6 +308,8 @@ export default class Patients extends React.Component {
   render() {
     return (
       <div className="tableWrapper">
+              here :{this.props.userReducer.national_id}
+
         <MUIDataTable
           title="Patient Visits"
           columns={this.state.columns}
@@ -254,3 +322,18 @@ export default class Patients extends React.Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    // national_id: state.national_id,
+    userReducer: state.userReducer,
+
+  };
+};
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     setToken: () => dispatch(alert("")),
+//   };
+// };
+
+export default connect(mapStateToProps)(Patients);

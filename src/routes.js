@@ -118,7 +118,7 @@ const routes = [
     component: PatientDocuments,
   },
   {
-    path: "/Fileuploading",
+    path: "/Fileuploading/:id",
     name: "Add Documents",
     component: AddDocuments,
   },

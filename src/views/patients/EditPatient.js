@@ -12,8 +12,12 @@ import {
   CDropdownToggle
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
+import { connect } from "react-redux";
+import { store } from "./../../store";
 
-export default class EditPatient extends React.Component {
+// export default class EditPatient extends React.Component {
+   class EditPatient extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -111,6 +115,8 @@ export default class EditPatient extends React.Component {
     <div class="col-md-4">
         <h4>Edit Patient</h4>
     </div>
+    here :{this.props.userReducer.national_id}
+
       </div>
 <hr></hr>
 <div className="form-horizontal">
@@ -190,3 +196,18 @@ export default class EditPatient extends React.Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    // national_id: state.national_id,
+    userReducer: state.userReducer,
+
+  };
+};
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     setToken: () => dispatch(alert("")),
+//   };
+// };
+
+export default connect(mapStateToProps)(EditPatient);

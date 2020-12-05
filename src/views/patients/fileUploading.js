@@ -3,6 +3,8 @@ import Axios from "axios";
 import React, { useState } from "react";
 import {useParams} from 'react-router';
 import { Button } from "react-bootstrap";
+import { connect } from "react-redux";
+import { store } from "./../../store";
 
 const styles = {
   container: {
@@ -62,9 +64,9 @@ const FileUploader = (props) => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(    {
-       
+        // props.userReducer.national_id
         "visit": null,
-        "visitId": 2,
+        "visitId": event.VisitId,
         "imagePath": event.ImagePath,
         "imageName": event.ImageName,
         "isDeleted": false,
@@ -83,9 +85,11 @@ const FileUploader = (props) => {
     // console.log("data in post",itemData)
     // url for api
 
+    let id=props.match.params.id;
 
+    console.log("counter in posting of url",id)
 
-    var request = 'http://cloudclinicapi.azurewebsites.net/api/visit/2'
+    var request = `http://cloudclinicapi.azurewebsites.net/api/visit/${id}`
     console.log("request of login task:", request);
 
     // Api call method configuration
@@ -113,10 +117,11 @@ const FileUploader = (props) => {
               isDeleted: false,
               ImagePath: images[i].url,
               ImageName: images[i].name,
-              //  VisitId: visitData.VisitId,
+               VisitId: data.id,
      PatientId: data.patient_NationalID,
             }
-            console.log("counter in posting",i)
+            
+
             SaveImageData(event);
             }
             // SaveImageData(event);
@@ -211,4 +216,19 @@ postClientData()
   );
 };
 
-export default FileUploader;
+// export default FileUploader;
+const mapStateToProps = (state) => {
+  return {
+    // national_id: state.national_id,
+    userReducer: state.userReducer,
+
+  };
+};
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     setToken: () => dispatch(alert("")),
+//   };
+// };
+
+export default connect(mapStateToProps)(FileUploader);

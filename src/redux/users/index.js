@@ -1,4 +1,4 @@
 import userReducer from "./reducers";
-import { getUserValues, setToken } from "./actions";
+import { getUserValues, setToken ,GET_nationalid} from "./actions";
 
-export default { userReducer, getUserValues, setToken };
+export default { userReducer, getUserValues, setToken,GET_nationalid };

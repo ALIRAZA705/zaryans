@@ -3,6 +3,7 @@ import { types } from "./types";
 let initialState = {
   token: null,
   users: null,
+  national_id:12345,
   sidebarShow: "responsive",
 };
 const userReducer = (state = initialState, action) => {
@@ -18,6 +19,11 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         token: action.payload.token,
+      };
+      case types.GET_nationalid:
+      return {
+        ...state,
+        national_id: action.payload.national_id,
       };
     default: {
       return state;
