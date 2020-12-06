@@ -69,7 +69,21 @@ export default class ViewPatientsDocuments extends React.Component {
         console.log("url for patient doc",this.props.match.params.id)
       });
   }
-
+componentDidUpdate(){
+  fetch(
+    `https://cloudclinicapi.azurewebsites.net/api/LabTest/visitLabTest/${this.props.match.params.id}`
+  )
+    .then(this.handleErrors)
+    .then((result) => result.json())
+    .then((rowData) => {
+      if (typeof rowData == typeof "abc") {
+        alert(rowData);
+      } else {
+        this.setState({ rowData });
+      }
+      console.log("url for patient doc",this.props.match.params.id)
+    });
+}
   onSelectionChanged = () => {
     var selectedRows = this.gridApi.getSelectedRows();
     this.props.history.push(

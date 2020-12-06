@@ -5,6 +5,8 @@ import {useParams} from 'react-router';
 import { Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { store } from "./../../store";
+import { NavLink } from "react-router-dom";
+
 
 const styles = {
   container: {
@@ -129,7 +131,8 @@ const FileUploader = (props) => {
                 createUpload();
                 
             
-                alert("File Saved");
+                // alert("File Saved");
+                props.history.push(`/LabTest/visitLabTest/${props.match.params.id}`)
         });
     }
     catch (e) {
