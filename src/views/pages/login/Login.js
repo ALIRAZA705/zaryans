@@ -51,6 +51,13 @@ const Login = () => {
               token: "12345",
             },
           });
+          store.dispatch({
+            type: "SET_Role",
+            payload: {
+              roles: res.data.roles[0],
+            },
+          });
+          sessionStorage.setItem("roles",res.data.roles[0])
           history.push("/dashboard");
         }
       })

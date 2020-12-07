@@ -28,6 +28,8 @@ const AddEventModal = ({ show, handleClose, calendars }) => {
     EndDateTime: "2020-08-25T10:00:00-05:00",
     meetinglink: "2020-08-25T10:00:00-05:00",
   });
+  const [isreload, setisreload] = useState(false);
+
   const [ConsultantName, setConsultantName] = useState("");
   const [Cdata, setCdata] = useState([]);
   // const [meetlink, setmeetlink] = React.useState(new Date("").getTime());
@@ -68,6 +70,8 @@ const AddEventModal = ({ show, handleClose, calendars }) => {
   };
 
   const handleSubmit = (e) => {
+    props.history.push("appointments/Appointmens")
+
     e.preventDefault();
     console.log(formData);
     createVisit("Create Visit Form Data", formData);
@@ -126,6 +130,8 @@ const AddEventModal = ({ show, handleClose, calendars }) => {
 
     //let ss = new SchedulerService();
     //let returnval = ss.AddThisEvent(event);
+    // window.location.reload();
+    setisreload(true)
     handleClose();
     //window.location.reload();
   };
@@ -212,7 +218,15 @@ const AddEventModal = ({ show, handleClose, calendars }) => {
       );
     }
   );
+//   useEffect(() => {
+//     if(isreload==true)
+//     {
+//   window.location.reload();
+//     console.log('mount it!');
 
+//     }
+//     console.log("state of reload",isreload)
+// }, []); 
   return (
     <>
       <Modal show={show} onHide={handleClose}>

@@ -27,3 +27,14 @@ export function GET_nationalid(national_id) {
     },
   };
 }
+export function GET_SET_Role(roles) {
+  console.log("visit id in dispatch GET_SET_Role",roles)
+  return {
+    
+    type: types.GET_SET_Role,
+    payload: {
+      roles,
+    },
+  };
+}
+

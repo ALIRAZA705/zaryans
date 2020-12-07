@@ -228,7 +228,11 @@ export default class Patients extends React.Component {
       .then((result) => result.json())
       .then((rowData) => this.setState({ rowData }));
   }
-
+componentDidUpdate(){
+  fetch("https://cloudclinicapi.azurewebsites.net/api/patient")
+  .then((result) => result.json())
+  .then((rowData) => this.setState({ rowData }));
+}
   onSelectionChanged = () => {
     var selectedRows = this.gridApi.getSelectedRows();
     this.props.history.push(

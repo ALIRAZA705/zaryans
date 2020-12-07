@@ -4,6 +4,7 @@ let initialState = {
   token: null,
   users: null,
   national_id:12345,
+  roles:"admin",
   sidebarShow: "responsive",
 };
 const userReducer = (state = initialState, action) => {
@@ -25,6 +26,11 @@ const userReducer = (state = initialState, action) => {
         ...state,
         national_id: action.payload.national_id,
       };
+      case types.GET_SET_Role:
+        return {
+          ...state,
+          roles: action.payload.roles,
+        };
     default: {
       return state;
     }
