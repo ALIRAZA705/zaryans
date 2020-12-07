@@ -1,5 +1,6 @@
 import React from "react";
-
+const loggedIn= sessionStorage.getItem("loggedIn")
+console.log("login flag",loggedIn)
 //const CheckBox = React.lazy(() => import('./controls/checkbox'));
 const Toaster = React.lazy(() =>
   import("./views/notifications/toaster/Toaster")
@@ -30,6 +31,8 @@ const Receptionists = React.lazy(() =>
 const GuestMeeting = React.lazy(() => import("./views/meetings/GuestMeeting"));
 const HostMeeting = React.lazy(() => import("./views/meetings/HostMeeting"));
 const Permission = React.lazy(() => import("./views/meetings/Permission"));
+// const loggedIn_comp = React.lazy(() => import("./views/pages/login"));
+
 //Consultant
 const ConsultantQueue = React.lazy(() =>
   import("./views/pages/Consultant/Consultant")
@@ -234,7 +237,12 @@ const routes = [
   { path: "/users", exact: true, name: "Users", component: Users },
   { path: "/users/:id", exact: true, name: "User Details", component: User },
   { path: '/', exact: true, name: 'Home' },
+  // { path: "/login", name: "Login", component: loggedIn_comp },
+
+  // (loggedIn ? (<MeepAnalytics/>) : (<ViewLogin />)) Dashboard
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
+
+  // { path: '/dashboard', name: 'Dashboard', component: (loggedIn ? (Dashboard) : (loggedIn_comp )) },
   { path: '/theme', name: 'Theme', component: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', component: Colors },
 

@@ -109,6 +109,8 @@ const TheHeaderDropdown = (props) => {
                   token: null,
                 },
               });
+              sessionStorage.clear();
+              window.location.reload()
               history.push("/login");
             }}
           >

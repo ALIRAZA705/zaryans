@@ -58,6 +58,8 @@ const Login = () => {
             },
           });
           sessionStorage.setItem("roles",res.data.roles[0])
+          sessionStorage.setItem("loggedIn",true)
+
           history.push("/dashboard");
         }
       })
