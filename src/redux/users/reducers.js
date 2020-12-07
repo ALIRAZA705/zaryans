@@ -1,7 +1,7 @@
 import { types } from "./types";
-
+const access_token=sessionStorage.getItem("access_token")
 let initialState = {
-  token: null,
+  token: access_token,
   users: null,
   national_id:12345,
   roles:"admin",

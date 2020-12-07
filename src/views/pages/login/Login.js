@@ -35,7 +35,38 @@ const Login = () => {
       alert("Please Enter Password ");
       return;
     }
+    // for access token
+    const qs = require('qs');
+    // qs.stringify({ 'bar': 123 })
 
+     Axios.post("https://cloudclinicapi.azurewebsites.net/oauth/token",    qs.stringify({
+      UserName: username,
+      Password: password,
+      grant_type:"password"
+    }))
+      .then((res) => {
+        console.log(res);
+        if (res.data === "Email or Password is incorrect") {
+          alert(res.data);
+          console.log("access token of user in if",res.data.access_token)
+
+        } else {
+          store.dispatch({
+            type: "SET_TOKEN",
+            payload: {
+              token: res.data.access_token,
+            },
+          });
+          sessionStorage.setItem("access_token",res.data.access_token)
+          console.log("access token of user in else",res.data.access_token)
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        alert(error.message);
+      });
+  // };
+// for login roles of sidebar menu
     Axios.post("https://cloudclinicapi.azurewebsites.net/api/accounts/users/login", {
       UserName: username,
       Password: password,
@@ -45,12 +76,12 @@ const Login = () => {
         if (res.data === "Email or Password is incorrect") {
           alert(res.data);
         } else {
-          store.dispatch({
-            type: "SET_TOKEN",
-            payload: {
-              token: "12345",
-            },
-          });
+          // store.dispatch({
+          //   type: "SET_TOKEN",
+          //   payload: {
+          //     token: "12345",
+          //   },
+          // });
           store.dispatch({
             type: "SET_Role",
             payload: {

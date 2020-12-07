@@ -111,6 +111,8 @@ const TheHeaderDropdown = (props) => {
               });
               sessionStorage.clear();
               window.location.reload()
+              sessionStorage.setItem("loggedIn",false)
+
               history.push("/login");
             }}
           >
